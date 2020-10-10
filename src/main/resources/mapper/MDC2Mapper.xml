@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hp.docker_base.mapper.MDC2Mapper" >
+  <resultMap id="BaseResultMap" type="com.hp.docker_base.bean.MDC2" >
+    <id column="Rule" property="rule" jdbcType="INTEGER" />
+    <result column="reference" property="reference" jdbcType="VARCHAR" />
+    <result column="belief" property="belief" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Rule, reference, belief
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hp.docker_base.bean.MDC2Example" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mdc2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mdc2
+    where Rule = #{rule,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mdc2
+    where Rule = #{rule,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hp.docker_base.bean.MDC2Example" >
+    delete from mdc2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hp.docker_base.bean.MDC2" >
+    insert into mdc2 (Rule, reference, belief
+      )
+    values (#{rule,jdbcType=INTEGER}, #{reference,jdbcType=VARCHAR}, #{belief,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hp.docker_base.bean.MDC2" >
+    insert into mdc2
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rule != null" >
+        Rule,
+      </if>
+      <if test="reference != null" >
+        reference,
+      </if>
+      <if test="belief != null" >
+        belief,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rule != null" >
+        #{rule,jdbcType=INTEGER},
+      </if>
+      <if test="reference != null" >
+        #{reference,jdbcType=VARCHAR},
+      </if>
+      <if test="belief != null" >
+        #{belief,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hp.docker_base.bean.MDC2Example" resultType="java.lang.Integer" >
+    select count(*) from mdc2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mdc2
+    <set >
+      <if test="record.rule != null" >
+        Rule = #{record.rule,jdbcType=INTEGER},
+      </if>
+      <if test="record.reference != null" >
+        reference = #{record.reference,jdbcType=VARCHAR},
+      </if>
+      <if test="record.belief != null" >
+        belief = #{record.belief,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mdc2
+    set Rule = #{record.rule,jdbcType=INTEGER},
+      reference = #{record.reference,jdbcType=VARCHAR},
+      belief = #{record.belief,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hp.docker_base.bean.MDC2" >
+    update mdc2
+    <set >
+      <if test="reference != null" >
+        reference = #{reference,jdbcType=VARCHAR},
+      </if>
+      <if test="belief != null" >
+        belief = #{belief,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Rule = #{rule,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hp.docker_base.bean.MDC2" >
+    update mdc2
+    set reference = #{reference,jdbcType=VARCHAR},
+      belief = #{belief,jdbcType=VARCHAR}
+    where Rule = #{rule,jdbcType=INTEGER}
+  </update>
+</mapper>

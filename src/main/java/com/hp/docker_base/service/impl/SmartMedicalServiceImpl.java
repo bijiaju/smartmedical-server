@@ -1,7 +1,11 @@
-package com.hp.docker_base.service;
+package com.hp.docker_base.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.hp.docker_base.algorithm.*;
+import com.hp.docker_base.bean.MDC2;
+import com.hp.docker_base.service.IMDC2Service;
+import com.hp.docker_base.service.ISmartMedicalService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,14 +17,21 @@ import java.util.List;
  * @Date 2020/10/9 10:50
  */
 @Service
-public class SmartMedicalServiceImpl implements ISmartMedicalService{
+public class SmartMedicalServiceImpl implements ISmartMedicalService {
 
+
+    @Autowired
+    private MDC2ServiceImpl imdc2Service;
 
 
     @Override
     public FidOutDto getMedicalResult(String RecId,
                                              String DeptId,
                                              String DataIn) {
+        // 0、已经解析处理好的数据
+        ArrayList<ArrayList<Double>> beliefValueList = imdc2Service.getBeliefValueList();
+        ArrayList<ArrayList<Double>> referenceValueList = imdc2Service.getReferenceValueList();
+
         // TODO: 2020/10/9 修改成你的算法
         // 1、请求参数处理
         // 1-1、处理科室和诊断信息
