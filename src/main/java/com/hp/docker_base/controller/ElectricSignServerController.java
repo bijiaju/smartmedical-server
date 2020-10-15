@@ -1,7 +1,11 @@
 package com.hp.docker_base.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.hp.docker_base.algorithm.FidOutDto;
+import com.hp.docker_base.bean.CopyFileItem;
+import com.hp.docker_base.bean.ProcessRetDto;
 import com.hp.docker_base.bean.em.EnumOKOrNG;
+import com.hp.docker_base.service.IFileService;
 import com.hp.docker_base.service.ISmartMedicalService;
 import com.hp.docker_base.util.CommonUtil;
 import io.swagger.annotations.ApiImplicitParam;
@@ -10,46 +14,36 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/smart-medical")
-public class SmartMedicalController {
+@RequestMapping("/file")
+public class ElectricSignServerController {
 
 
     @Autowired
-    private ISmartMedicalService smartMedicalService;
+    private IFileService fileService;
 
-    //请求参数
-    // http://localhost:8083/smart-medical/diagnostic/result
     @ApiOperation(value = "获取诊断结果", notes = "获取诊断结果")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "RecId", value = "诊断编号", paramType = "query", required = true),
-            @ApiImplicitParam(name = "DeptId", value = "科室编号", paramType = "query", required = true),
-            @ApiImplicitParam(name = "DataIn", value = "[{FidIn:\"输入特征Id1\", Value:\"特征数值\"}, \n" +
-                    "               {FidIn:\"输入特征Id2\", Value:\"特征数值\"}, \n" +
-                    "               {FidIn:\"输入特征Id3\", Value:\"特征数值\"}", paramType = "query", required = true)
+            @ApiImplicitParam(name = "fileJsonStr", value = "变更文件位置", paramType = "query", required = true)
     })
-    @PostMapping("/diagnostic/result")
-    public  Map<String,Object>  doQueryDiagnosticFeatureList(@RequestParam(value = "RecId") String RecId,
-                                                             @RequestParam(value = "DeptId") String DeptId,
-                                                             @RequestParam(value = "DataIn") String DataIn) {
+    @GetMapping("/copy")
+    public  Map<String,Object>  doCopyFileList(@RequestParam(value = "fileJsonStr") String fileJsonStr) {
+
+        // 0、转换对象
+        List<CopyFileItem> copyFileItemList = JSON.parseArray(fileJsonStr, CopyFileItem.class);
 
         // 1、调用诊断服务结果
-        FidOutDto medicalResult = smartMedicalService.getMedicalResult(RecId,DeptId,DataIn);
+        ProcessRetDto processRetDto = fileService.copyFileList(copyFileItemList);
+        if(processRetDto == null){
+            return CommonUtil.setReturnMap(EnumOKOrNG.NG.getCode(),"文件拷贝个数为0",null);
+        }
 
         // 2、响应结果结果数据
-        return CommonUtil.setReturnMap(EnumOKOrNG.OK.getCode(), EnumOKOrNG.OK.getValue(),medicalResult);
+        return CommonUtil.setReturnMap(EnumOKOrNG.OK.getCode(), EnumOKOrNG.OK.getValue(),processRetDto);
     }
-
-
-
-
-
-
-
-
-
 
 
 }
