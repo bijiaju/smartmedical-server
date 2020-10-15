@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://www.padual.com/java/logback.xsd"
+        debug="false" scan="false" scanPeriod="30 second">
+
+    <property name="PROJECT" value="sign-server-dev" />
+    <property name="ROOT" value="D:/logs/${PROJECT}/" />
+    <property name="FILESIZE" value="20MB" />
+    <property name="MAXHISTORY" value="30" />
+    <timestamp key="DATETIME" datePattern="yyyy-MM-dd HH:mm:ss" />
+    <!-- 控制台打印 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="utf-8">
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!-- ERROR 输入到文件，按日期和文件大小 -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder charset="utf-8">
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %m%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${ROOT}%d/error.%i.log</fileNamePattern>
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${FILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+
+    <!-- INFO 输入到文件，按日期和文件大小 -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder charset="utf-8">
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %m%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${ROOT}%d/info.%i.log</fileNamePattern>
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${FILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 相关日志输出-->
+    <logger name="org.springframework" level="Info" additivity="true"/>
+    <logger name="org.mybatis.spring" level="INFO" additivity="false"/>
+    <logger name="org.quartz.core" level="ERROR" additivity="false"/>
+    <logger name="com.mangofactory.swagger" level="ERROR" additivity="false"/>
+    <logger name="org.apache.velocity" level="ERROR" additivity="false"/>
+
+    <!-- Logger 根目录 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ERROR" />
+        <appender-ref ref="INFO" />
+    </root>
+</configuration>
