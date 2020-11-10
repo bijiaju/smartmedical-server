@@ -29,7 +29,7 @@ public class ElectricSignServerController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "fileJsonStr", value = "变更文件位置", paramType = "query", required = true)
     })
-    @GetMapping("/copy")
+    @PostMapping("/copy")
     public  Map<String,Object>  doCopyFileList(@RequestParam(value = "fileJsonStr") String fileJsonStr) {
 
         // 0、转换对象
