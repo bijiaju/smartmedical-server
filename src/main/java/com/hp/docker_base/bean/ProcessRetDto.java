@@ -30,7 +30,7 @@ import java.util.List;
 @Data
 
 @ApiModel("集团企业员工信息")
-public class ProcessRetDto extends StaffBaseDto {
+public class ProcessRetDto  {
 
     private static final long serialVersionUID = -7380215445341707945L;
 
