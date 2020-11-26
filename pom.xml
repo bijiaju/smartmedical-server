@@ -8,6 +8,7 @@
         <version>2.1.3.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <packaging>war</packaging>
     <groupId>com.hp</groupId>
     <artifactId>elec-sign-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -28,9 +29,34 @@
             <version>1.5.21</version>
         </dependency>
 
+        <!--最终打成war包，排除内置的tomcat-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!--打war的时候需要-->
+            <!--移除内置tomcat-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--打war的时候需要-->
+        <!--添加一个tomcat的依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--打war的时候需要-->
+        <!--添加servlet-api的依赖,用来打war包  -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

@@ -1,13 +1,10 @@
-/*
 package com.hp.docker_base;
 
-*/
 /**
  * @Desc TODO
  * @Author 24763
  * @Date 2020/11/12 14:59
- *//*
-
+ */
 
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -22,4 +19,3 @@ public class ServletInitializer extends SpringBootServletInitializer {
     }
 
 }
-*/

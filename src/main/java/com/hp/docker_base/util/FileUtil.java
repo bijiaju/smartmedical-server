@@ -60,9 +60,8 @@ public class FileUtil {
         } catch (FileNotFoundException e){
             failCount++;
             failList.add(barCode);
-          //  System.out.println(barCode+"复制单个文件出错,文件不存在");
             logger.error("复制单个文件出错,文件不存在:" +  ExceptionUtils.getStackTrace(e));
-            //
+
         }
         catch (Exception e) {
             failCount++;
@@ -80,19 +79,6 @@ public class FileUtil {
         return ret;
     }
 
-    //重命名文件
-    public static void renameFile(String path, String oldName, String newName){
-        if(!oldName.equals(newName)){
-            File oldFile = new File(path+"/"+oldName);
-            File newFile = new File(path+"/"+newName);
-            if(newFile.exists()){
-                System.out.println(newName+"已经存在");}
-            else{
-                oldFile.renameTo(newFile);
-            }
-
-        }
-    }
 
        /*  int bytesum = 0;
                 int byteread = 0;
