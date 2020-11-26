@@ -3,11 +3,10 @@ package com.hp.docker_base.service.impl;
 import com.hp.docker_base.bean.CopyFileItem;
 import com.hp.docker_base.bean.ProcessRetDto;
 import com.hp.docker_base.service.IFileService;
-import com.hp.docker_base.util.FileUtils;
+import com.hp.docker_base.util.FileUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,6 +23,7 @@ public class FileServiceImpl implements IFileService {
     @Override
     public ProcessRetDto copyFileList(List<CopyFileItem> copyFileItemList) {
 
+
         List<String> sucList = new ArrayList<>(); //失败个数3
         List<String> failList = new ArrayList<>(); //失败个数3*/
 
@@ -31,7 +31,7 @@ public class FileServiceImpl implements IFileService {
         if(!copyFileItemList.isEmpty() && copyFileItemList != null){
             for(CopyFileItem fileItem:copyFileItemList){
                 // 拷贝文件
-                processRetDto = FileUtils.copyFile(fileItem.getSourcePathFile(),
+                processRetDto = FileUtil.copyFile(fileItem.getSourcePathFile(),
                         fileItem.getTargetPathFile(),
                         sucList,
                         failList);
@@ -39,7 +39,7 @@ public class FileServiceImpl implements IFileService {
         }
 
         // 清空执行个数
-        FileUtils.clearCount();
+        FileUtil.clearCount();
 
         return processRetDto;
     }

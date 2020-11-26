@@ -1,12 +1,10 @@
 package com.hp.docker_base.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.hp.docker_base.algorithm.FidOutDto;
 import com.hp.docker_base.bean.CopyFileItem;
 import com.hp.docker_base.bean.ProcessRetDto;
 import com.hp.docker_base.bean.em.EnumOKOrNG;
 import com.hp.docker_base.service.IFileService;
-import com.hp.docker_base.service.ISmartMedicalService;
 import com.hp.docker_base.util.CommonUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
